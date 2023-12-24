@@ -1,0 +1,20 @@
+name: Backend deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup SSH Key
+      run: echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+
+    - name: Deploy to Server
+      run: |
+        ssh -i ~/.ssh/id_rsa user@your-server-ip "cd /root/No/ && git pull origin main"
