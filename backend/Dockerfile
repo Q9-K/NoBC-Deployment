@@ -3,7 +3,7 @@ MAINTAINER Q9K
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
 COPY pip.conf /root/.pip/pip.conf
-ADD code /code
+COPY code /code
 COPY uwsgi /code/uwsgi
 COPY asgi /code/asgi
 COPY start_uwsgi.sh /code/start_uwsgi.sh
