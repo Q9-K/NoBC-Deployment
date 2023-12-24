@@ -1,0 +1,24 @@
+name: deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: get env
+        run: |
+          cd  NoBeiCi
+          npm install
+          npm run build
+      - name: Deploy
+        uses: cross-the-world/scp-pipeline@master
+        with:
+          host: ${{secrets.IP}}
+          user: ${{secrets.USER}}
+          pass: ${{secrets.PASSWORD}}
+          connect_timeout: 10s
+          local: "./NoBeiCi/dist/*"
+          remote: "/data/frontend/"

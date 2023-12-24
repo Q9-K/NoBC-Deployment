@@ -1,0 +1,102 @@
+version: "3.5"
+networks:
+  nobc-network:
+    driver: bridge
+services:
+  elasticsearch:
+    image: elasticsearch:7.17.7
+    container_name: elasticsearch
+    restart: on-failure
+    environment:
+      - "discovery.type=single-node"
+    volumes:
+      - /data/elasticsearch:/usr/share/elasticsearch
+    ports:
+      - 9200:9200
+    networks:
+      - nobc-network
+
+  mysql:
+    image: mysql:8.0.19
+    container_name: mysql
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - /data/mysql/conf:/etc/mysql/conf.d
+      - /data/mysql/logs:/var/log/mysql
+      - /data/mysql/data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      - nobc-network
+
+  redis:
+    image: redis:7.0.0
+    container_name: redis
+    restart: on-failure
+    command:
+      - redis-server /etc/redis/redis.conf
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /data/redis/data:/data
+      - /data/redis/conf/redis.conf:/etc/redis/redis.conf
+      - /data/redis/logs:/logs
+    ports:
+      - 6379:6379
+    privileged: true
+    networks:
+      - nobc-network
+
+  rabbitmq:
+    restart: on-failure
+    image: rabbitmq:management
+    container_name: rabbitmq
+    hostname: rabbit
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      TZ: Asia/Shanghai
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - /data/rabbitmq/data:/var/lib/rabbitmq
+      - /data/rabbitmq/conf:/etc/rabbitmq
+    networks:
+      - nobc-network
+
+  nginx:
+    restart: on-failure
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /data/nginx:/etc/nginx
+      - /data/frontend:/usr/share/nginx/html
+    networks:
+      - nobc-network
+  django:
+    restart: on-failure
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    networks:
+      - nobc-network
+    command:
+      - /code/start_uwsgi.sh
+  daphne:
+    restart: on-failure
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    networks:
+      - nobc-network
+    command:
+      - /code/start_daphne.sh
+
+
+
