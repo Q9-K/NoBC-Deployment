@@ -79,20 +79,18 @@ services:
       - /data/frontend:/usr/share/nginx/html
     networks:
       - nobc-network
-  django:
+  uwsgi:
     restart: on-failure
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    container_name: uwsgi
+    image: nobc:latest
     networks:
       - nobc-network
     command:
       - /code/start_uwsgi.sh
-  daphne:
+  asgi:
     restart: on-failure
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: nobc:latest
+    container_name: asgi
     networks:
       - nobc-network
     command:

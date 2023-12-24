@@ -1,2 +1,3 @@
+#!/bin/bash
 supervisord -c /code/supervisord.conf
-supervisorctl start daphne
+supervisord start daphne
