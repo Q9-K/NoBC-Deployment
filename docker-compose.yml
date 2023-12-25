@@ -78,6 +78,8 @@ services:
     restart: on-failure
     image: nobc:latest
     container_name: asgi
+    volumes:
+      - /root/NoBC-Deployment/backend/supervisord.conf:/code/supervisord.conf
     networks:
       - nobc-network
     command:
