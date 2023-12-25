@@ -13,6 +13,7 @@ services:
       - /data/elasticsearch:/usr/share/elasticsearch
     ports:
       - 9200:9200
+      - 9300:9300
     networks:
       - nobc-network
 
