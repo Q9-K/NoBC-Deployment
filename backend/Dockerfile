@@ -14,6 +14,7 @@ COPY start_uwsgi.sh /code/start_uwsgi.sh
 COPY supervisord.conf /code/supervisord.conf
 COPY start_daphne.sh /code/start_daphne.sh
 WORKDIR /code
+RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN pip install uwsgi
 RUN pip install supervisor
