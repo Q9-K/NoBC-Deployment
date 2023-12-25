@@ -67,18 +67,6 @@ services:
     networks:
       - nobc-network
 
-  nginx:
-    restart: on-failure
-    image: nginx:latest
-    container_name: nginx
-    ports:
-      - 80:80
-      - 443:443
-    volumes:
-      - /data/nginx:/etc/nginx
-      - /data/frontend:/usr/share/nginx/html
-    networks:
-      - nobc-network
   uwsgi:
     restart: on-failure
     container_name: uwsgi
@@ -95,6 +83,21 @@ services:
       - nobc-network
     command:
       - /code/start_daphne.sh
+  nginx:
+    restart: on-failure
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /data/nginx:/etc/nginx
+      - /data/frontend:/usr/share/nginx/html
+    networks:
+      - nobc-network
+    depends_on:
+      - uwsgi
+      - asgi
 
 
 
