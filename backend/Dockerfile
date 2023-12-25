@@ -7,7 +7,7 @@ ENV https_proxy "http://172.17.0.1:7890"
 ENV HTTPS_PROXY "http://172.17.0.1:7890"
 RUN mkdir /code
 #COPY pip.conf /root/.pip/pip.conf
-COPY code /code
+COPY NoBC-Academic-Backend /code
 COPY uwsgi /code/uwsgi
 COPY asgi /code/asgi
 COPY start_uwsgi.sh /code/start_uwsgi.sh
