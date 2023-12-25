@@ -1,8 +1,12 @@
 FROM python:3.9
 MAINTAINER Q9K
 ENV PYTHONUNBUFFERED 1
+ENV http_proxy "http://172.17.0.1:7890"
+ENV HTTP_PROXY "http://172.17.0.1:7890"
+ENV https_proxy "http://172.17.0.1:7890"
+ENV HTTPS_PROXY "http://172.17.0.1:7890"
 RUN mkdir /code
-COPY pip.conf /root/.pip/pip.conf
+#COPY pip.conf /root/.pip/pip.conf
 COPY code /code
 COPY uwsgi /code/uwsgi
 COPY asgi /code/asgi
