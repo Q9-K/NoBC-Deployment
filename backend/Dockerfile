@@ -11,7 +11,7 @@ COPY NoBC-Academic-Backend /code
 COPY uwsgi /code/uwsgi
 COPY asgi /code/asgi
 COPY start_uwsgi.sh /code/start_uwsgi.sh
-COPY supervisord.conf /code/supervisord.conf
+#COPY supervisord.conf /code/supervisord.conf
 COPY start_daphne.sh /code/start_daphne.sh
 WORKDIR /code
 RUN /usr/local/bin/python -m pip install --upgrade pip
