@@ -2,7 +2,7 @@ FROM python:3.9
 MAINTAINER Q9K
 ENV PYTHONUNBUFFERED 1
 RUN mkdir /code
-#COPY pip.conf /root/.pip/pip.conf
+COPY pip.conf /root/.pip/pip.conf
 COPY code /code
 COPY uwsgi /code/uwsgi
 COPY asgi /code/asgi
