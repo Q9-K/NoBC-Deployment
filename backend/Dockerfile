@@ -17,7 +17,7 @@ WORKDIR /code
 RUN /usr/local/bin/python -m pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN pip install uwsgi
-RUN pip install supervisor
+#RUN pip install supervisor
 RUN chmod +x start_daphne.sh
 RUN chmod +x start_uwsgi.sh
 EXPOSE 8000
