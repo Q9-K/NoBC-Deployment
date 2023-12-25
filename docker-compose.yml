@@ -35,17 +35,16 @@ services:
     image: redis:7.0.0
     container_name: redis
     restart: on-failure
-    command:
-      - redis-server /etc/redis/redis.conf
     environment:
       - TZ=Asia/Shanghai
     volumes:
       - /data/redis/data:/data
-      - /data/redis/conf/redis.conf:/etc/redis/redis.conf
+      - /data/redis/conf:/usr/local/etc/redis
       - /data/redis/logs:/logs
     ports:
       - 6379:6379
     privileged: true
+    command: redis-server /usr/local/etc/redis/redis.conf
     networks:
       - nobc-network
 
