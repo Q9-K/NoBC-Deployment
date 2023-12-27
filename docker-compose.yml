@@ -9,7 +9,7 @@ services:
     restart: on-failure
     environment:
       - "discovery.type=single-node"
-      - "ES_JAVA_OPTS=-Xms40g -Xmx40g"
+      - "ES_JAVA_OPTS=-Xms32g -Xmx32g"
     volumes:
       - /data/elasticsearch:/usr/share/elasticsearch
     ports:
